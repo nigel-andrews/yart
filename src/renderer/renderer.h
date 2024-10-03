@@ -12,6 +12,8 @@ namespace yart
     class renderer
     {
         public:
+            using render_function_t = F;
+
             template <typename... args>
             renderer(int width, int height, args... params)
                 : render_function_{params...}
@@ -22,21 +24,7 @@ namespace yart
             int width_get() const { return width_;}
             int height_get() const {return height_;}
 
-            void render_scene(const scene& /*scene*/)
-            {
-                if constexpr (render_functions::needs_setup<F>::value)
-                {
-                    render_function_.setup(width_, height_);
-                }
-
-                for (auto j = 0; j < height_; ++j)
-                {
-                    for (auto i = 0; i < width_; ++i)
-                    {
-                        render_function_(glm::vec3{}, i, j);
-                    }
-                }
-            }
+            void render_scene(const scene& /*scene*/);
 
         private:
             F render_function_;
@@ -44,3 +32,5 @@ namespace yart
             int height_;
     };
 };
+
+#include "renderer.hxx"

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <glm/gtx/string_cast.hpp>
 #include <glm/vec3.hpp>
 #include <format>
 #include <iostream>
