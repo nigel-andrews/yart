@@ -19,6 +19,6 @@ namespace yart
             return {};
         }
 
-        return glm::vec3{1.f};
+        return glm::vec3{ 1.f };
     }
 } // namespace yart

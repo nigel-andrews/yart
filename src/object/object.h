@@ -1,7 +1,7 @@
 #pragma once
 
-#include <optional>
 #include <glm/vec3.hpp>
+#include <optional>
 
 #include "ray.h"
 

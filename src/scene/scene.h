@@ -1,7 +1,7 @@
 #pragma once
 
-#include <vector>
 #include <memory>
+#include <vector>
 
 #include "object/object.h"
 
@@ -11,7 +11,9 @@ namespace yart
     {
     public:
         void add_object(object* object)
-        { objects_.emplace_back(object); }
+        {
+            objects_.emplace_back(object);
+        }
 
         void add_object(std::unique_ptr<object> object)
         {

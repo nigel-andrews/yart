@@ -2,7 +2,8 @@
 
 #include "renderer.h"
 
-namespace yart {
+namespace yart
+{
     template <typename F>
     void renderer<F>::render_scene(const scene& /*scene*/)
     {
@@ -15,8 +16,11 @@ namespace yart {
         {
             for (auto i = 0; i < width_; ++i)
             {
-                render_function_(glm::vec3{i / float(width_ - 1) * 255.999, j / float(height_ - 1) * 255.999, 0.f}, i, j);
+                render_function_(glm::vec3{ i / float(width_ - 1) * 255.999,
+                                            j / float(height_ - 1) * 255.999,
+                                            0.f },
+                                 i, j);
             }
         }
     }
-}
+} // namespace yart
