@@ -36,7 +36,15 @@ namespace yart
             return static_cast<float>(width_) / static_cast<float>(height_);
         }
 
-        void render_scene(const scene& /*scene*/);
+        void render_scene(const scene& scene);
+
+    private:
+        glm::vec2 ndc_coords(int i, int j)
+        {
+            return { ((2.f * (static_cast<float>(i) + 0.5f) / width_) - 1.f)
+                         * aspect_ratio(),
+                     1.f - 2.f * ((static_cast<float>(j) + 0.5f) / height_) };
+        }
 
     private:
         F render_function_;
