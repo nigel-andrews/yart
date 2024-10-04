@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "object/object.h"
+#include "camera.h"
 
 namespace yart
 {
@@ -20,7 +21,20 @@ namespace yart
             objects_.push_back(std::move(object));
         }
 
+        template <class Self>
+        auto&& camera_get(this Self&& self)
+        {
+            return std::forward<Self>(self).camera_;
+        }
+
+        template <class Self>
+        auto&& objects_get(this Self&& self)
+        {
+            return std::forward<Self>(self).objects_;
+        }
+
     private:
+        camera camera_;
         std::vector<std::unique_ptr<object>> objects_;
     };
 } // namespace yart
