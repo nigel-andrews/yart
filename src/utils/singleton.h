@@ -16,6 +16,7 @@ namespace yart::utils
             return instance;
         }
 
+    private:
         singleton() = default;
         ~singleton() = default;
     };

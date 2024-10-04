@@ -53,7 +53,6 @@ namespace yart::utils
 
     private:
         friend singleton;
-        logger() = default;
     };
 
     inline logger& log()
