@@ -6,7 +6,8 @@
 
 namespace yart
 {
-    void camera::look_at(const glm::vec3& position, const glm::vec3& up, const glm::vec3& target)
+    void camera::look_at(const glm::vec3& position, const glm::vec3& up,
+                         const glm::vec3& target)
     {
         position_ = position;
         target_ = target;
@@ -19,6 +20,7 @@ namespace yart
     glm::vec3 camera::compute_ray_direction(const glm::vec2& screen_pos) const
     {
         // Finding the point on the screen
-        return glm::normalize(glm::vec3{ 0.f, 0.f, -near_plane_ } + right_ * screen_pos.x + up_ * screen_pos.y);
+        return glm::normalize(glm::vec3{ 0.f, 0.f, -near_plane_ }
+                              + right_ * screen_pos.x + up_ * screen_pos.y);
     }
-}// namespace yart
+} // namespace yart

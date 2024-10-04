@@ -3,8 +3,8 @@
 #include <memory>
 #include <vector>
 
-#include "object/object.h"
 #include "camera.h"
+#include "object/object.h"
 
 namespace yart
 {
