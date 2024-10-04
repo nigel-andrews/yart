@@ -21,21 +21,17 @@ namespace yart
                 const auto ndc = ndc_coords(i, j);
                 ray.direction = camera.compute_ray_direction(ndc);
                 const auto& objects = scene.objects_get();
+                glm::vec3 unit_direction = glm::normalize(ray.direction);
+                auto a = 0.5f * (unit_direction.y + 1.0f);
+                const auto default_color =
+                    (1.0f - a) * glm::vec3(1.0f, 1.0f, 1.0f)
+                    + a * glm::vec3(0.5f, 0.7f, 1.0f);
 
                 // TODO: depth test
                 for (const auto& object : objects)
                 {
-                    if (object->intersect(ray))
-                    {
-                        render_function_(
-                            glm::vec3{ i / float(width_ - 1) * 255.999,
-                                       j / float(height_ - 1) * 255.999, 0.f },
-                            i, j);
-                    }
-                    else
-                    {
-                        render_function_({}, i, j);
-                    }
+                    render_function_(
+                        object->intersect(ray).value_or(default_color), i, j);
                 }
             }
         }

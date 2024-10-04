@@ -19,9 +19,9 @@ namespace yart::render_functions
         {
             // FIXME: colour remapping
             // FIXME: the stream should be part of the state of the renderer
-            std::cout << static_cast<int>(colour.r) << ' '
-                      << static_cast<int>(colour.g) << ' '
-                      << static_cast<int>(colour.b) << '\n';
+            std::cout << static_cast<int>(colour.r * 255.999) << ' '
+                      << static_cast<int>(colour.g * 255.999) << ' '
+                      << static_cast<int>(colour.b * 255.999) << '\n';
         }
     };
 
