@@ -31,7 +31,7 @@ namespace yart
             return height_;
         }
 
-        constexpr int aspect_ratio() const
+        constexpr float aspect_ratio() const
         {
             return static_cast<float>(width_) / static_cast<float>(height_);
         }
