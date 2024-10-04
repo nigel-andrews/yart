@@ -16,19 +16,24 @@ namespace yart
         using render_function_t = F;
 
         template <typename... args>
-        renderer(int width, int height, args... params)
+        constexpr renderer(int width, int height, args... params)
             : render_function_{ params... }
             , width_{ width }
             , height_{ height }
         {}
 
-        int width_get() const
+        constexpr int width_get() const
         {
             return width_;
         }
-        int height_get() const
+        constexpr int height_get() const
         {
             return height_;
+        }
+
+        constexpr int aspect_ratio() const
+        {
+            return static_cast<float>(width_) / static_cast<float>(height_);
         }
 
         void render_scene(const scene& /*scene*/);
