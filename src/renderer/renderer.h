@@ -9,7 +9,7 @@ namespace yart
     // This class abstracts the ray casting done by the camera
     // The render function is determined by the RenderFunction template
     // at compile time.
-    template <typename F = render_functions::ppm_renderer>
+    template <typename F = render_functions::ppm3_renderer>
     class renderer
     {
     public:

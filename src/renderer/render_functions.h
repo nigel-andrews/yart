@@ -8,7 +8,7 @@
 
 namespace yart::render_functions
 {
-    struct ppm_renderer
+    struct ppm3_renderer
     {
         void setup(int width, int height)
         {
@@ -30,8 +30,8 @@ namespace yart::render_functions
     {};
 
     template <>
-    struct needs_setup<ppm_renderer> : std::true_type
+    struct needs_setup<ppm3_renderer> : std::true_type
     {};
 
-    static_assert(std::is_function_v<ppm_renderer()>);
+    static_assert(std::is_function_v<ppm3_renderer()>);
 } // namespace yart::render_functions
