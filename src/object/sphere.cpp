@@ -6,7 +6,7 @@ namespace yart
 {
     std::optional<glm::vec3> sphere::intersect(ray r) const
     {
-        const auto ray_to_center = position - r.direction;
+        const auto ray_to_center = position - r.origin;
 
         const auto a = glm::dot(r.direction, r.direction);
         const auto b = -2.f * glm::dot(r.direction, ray_to_center);
@@ -19,6 +19,11 @@ namespace yart
             return {};
         }
 
-        return glm::vec3{ 1.f };
+        const auto t = (-b - std::sqrt(discriminant)) / (2.f * a);
+
+        const auto intersection_point = r[t];
+        const auto normal = glm::normalize(intersection_point - position);
+
+        return (normal + 1.f) / 2.f;
     }
 } // namespace yart

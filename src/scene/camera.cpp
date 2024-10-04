@@ -21,6 +21,6 @@ namespace yart
     {
         // Finding the point on the screen
         return glm::normalize(glm::vec3{ 0.f, 0.f, -near_plane_ }
-                              + right_ * screen_pos.x + up_ * screen_pos.y);
+                              - right_ * screen_pos.x + up_ * screen_pos.y);
     }
 } // namespace yart
