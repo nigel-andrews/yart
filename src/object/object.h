@@ -10,6 +10,8 @@ namespace yart
     struct object
     {
         virtual ~object() = default;
-        virtual std::optional<glm::vec3> intersect(ray r) const = 0;
+        virtual std::optional<float> intersect(ray r) const = 0;
+        virtual glm::vec3
+        get_normal_at(const glm::vec3& intersection_point) const = 0;
     };
 } // namespace yart

@@ -11,6 +11,8 @@ namespace yart
     class scene
     {
     public:
+        glm::vec3 cast_ray(const ray& ray) const;
+
         void add_object(object* object)
         {
             objects_.emplace_back(object);

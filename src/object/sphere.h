@@ -15,6 +15,8 @@ namespace yart
             , radius(radius)
         {}
 
-        std::optional<glm::vec3> intersect(ray r) const final;
+        std::optional<float> intersect(ray r) const final;
+        glm::vec3
+        get_normal_at(const glm::vec3& intersection_point) const final;
     };
 } // namespace yart

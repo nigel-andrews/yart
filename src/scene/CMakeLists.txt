@@ -1,4 +1,4 @@
-add_library(scene STATIC camera.cpp)
+add_library(scene STATIC scene.cpp camera.cpp)
 
 set_target_properties(scene PROPERTIES CXX_STANDARD 23 CXX_EXTENSIONS OFF)
 
