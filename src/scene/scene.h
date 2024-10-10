@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "camera.h"
+#include "lights/point_light.h"
 #include "object/object.h"
 #include "utils/view_ptr.h"
 
@@ -25,6 +26,12 @@ namespace yart
             return objects_.back();
         }
 
+        void light_source_set(const glm::vec3& position,
+                              const glm::vec3& colour = glm::vec3{ 1.f })
+        {
+            light_source_ = lights::point_light{ position, colour };
+        }
+
         template <class Self>
         auto& camera_get(this Self&& self)
         {
@@ -39,6 +46,7 @@ namespace yart
 
     private:
         camera camera_;
+        lights::point_light light_source_;
         std::vector<std::unique_ptr<object>> objects_;
     };
 } // namespace yart
