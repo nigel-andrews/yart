@@ -12,7 +12,7 @@ namespace yart
     class camera
     {
     public:
-        constexpr camera(float near_plane = 1.f, float fov = 90.f)
+        constexpr camera(float near_plane = 1.f, float fov = 69.f)
             : near_plane_(near_plane)
             , fov_(fov)
         {}
@@ -27,6 +27,11 @@ namespace yart
         auto&& position_get(this Self&& self)
         {
             return std::forward<Self>(self).position_;
+        }
+
+        float fov_get() const
+        {
+            return fov_;
         }
 
     private:

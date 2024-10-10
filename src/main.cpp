@@ -16,9 +16,12 @@ int main(int argc, char** argv)
     yart::scene scene;
 
     auto obj = scene.add_object(
-        yart::factory::make_sphere(glm::vec3{ 0.f, 0.f, -5.f }, 3.f));
+        yart::factory::make_sphere(glm::vec3{ 0.f, 0.f, -10.f }, 3.f));
 
     obj->material.albedo = glm::vec3{ 1.f, 0.f, 0.f };
+
+    scene.add_object(
+        yart::factory::make_sphere(glm::vec3{ 4.f, 4.f, -5.f }, 1.f));
 
     scene.camera_get().look_at({}, { 0.f, 1.f, 0.f }, { 0.f, 0.f, -1.f });
 

@@ -18,7 +18,8 @@ namespace yart
         {
             for (auto i = 0; i < width_; ++i)
             {
-                const auto ndc = ndc_coords(i, j);
+                auto ndc = ndc_coords(i, j);
+                ndc *= std::tan(camera.fov_get() / 2.f * M_PI / 180.f);
                 ray.direction = camera.compute_ray_direction(ndc);
                 render_function_(scene.cast_ray(ray), i, j);
             }
