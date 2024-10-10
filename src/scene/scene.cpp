@@ -6,14 +6,19 @@
 
 namespace yart
 {
-    namespace
+    glm::vec3 scene::compute_color(const object& object, const ray& ray,
+                                   float closest_root) const
     {
-        glm::vec3 compute_color(const object& object, const ray& /*ray*/,
-                                float /*closest_root*/)
-        {
-            return object.material.albedo;
-        }
-    } // namespace
+        // TODO: gamma correction
+        const auto light_direction =
+            glm::normalize(light_source_.position - object.position);
+        const auto intersection_point =
+            ray.origin + ray.direction * closest_root;
+        const auto incident_angle =
+            glm::dot(object.get_normal_at(intersection_point), light_direction);
+
+        return object.material.albedo * std::max(incident_angle, 0.f);
+    }
 
     glm::vec3 scene::cast_ray(const ray& ray) const
     {
