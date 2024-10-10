@@ -1,10 +1,18 @@
+#include <format>
+
 #include "object/object_factory.h"
 #include "renderer/renderer.h"
 #include "utils/view_ptr.h"
 
-int main()
+int main(int argc, char** argv)
 {
-    yart::renderer renderer{ 1600, 900 };
+    if (argc != 3)
+    {
+        std::cerr << std::format("Usage: {} <width> <height>\n", argv[0]);
+        return 1;
+    }
+
+    yart::renderer renderer{ std::atoi(argv[1]), std::atoi(argv[2]) };
     yart::scene scene;
 
     auto obj = scene.add_object(
