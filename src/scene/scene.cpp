@@ -17,7 +17,8 @@ namespace yart
         const auto incident_angle =
             glm::dot(object.get_normal_at(intersection_point), light_direction);
 
-        return object.material.albedo * std::max(incident_angle, 0.f);
+        return (object.material.albedo / static_cast<float>(M_PI))
+            * light_source_.colour * std::max(incident_angle, 0.f);
     }
 
     glm::vec3 scene::cast_ray(const ray& ray) const
