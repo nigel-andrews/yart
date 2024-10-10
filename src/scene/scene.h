@@ -16,7 +16,7 @@ namespace yart
         glm::vec3 cast_ray(const ray& ray) const;
 
         glm::vec3 compute_color(const object& object, const ray& ray,
-                                float closest_root) const;
+                                float t) const;
 
         void add_object(object* object)
         {

@@ -7,15 +7,13 @@
 namespace yart
 {
     glm::vec3 scene::compute_color(const object& object, const ray& ray,
-                                   float closest_root) const
+                                   float t) const
     {
         // TODO: gamma correction
         const auto light_direction =
             glm::normalize(light_source_.position - object.position);
-        const auto intersection_point =
-            ray.origin + ray.direction * closest_root;
         const auto incident_angle =
-            glm::dot(object.get_normal_at(intersection_point), light_direction);
+            glm::dot(object.get_normal_at(ray[t]), light_direction);
 
         return (object.material.albedo / static_cast<float>(M_PI))
             * light_source_.colour * std::max(incident_angle, 0.f);
