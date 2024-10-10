@@ -11,6 +11,8 @@ namespace yart::utils
     class logger : singleton<logger>
     {
     public:
+        logger() = default;
+
         static logger& get_logger_instance()
         {
             return get_instance();
