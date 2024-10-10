@@ -2,12 +2,27 @@
 
 #include <glm/geometric.hpp>
 
+#include "utils/view_ptr.h"
+
 namespace yart
 {
+    namespace
+    {
+        glm::vec3 compute_color(const object& object, const ray& ray,
+                                float closest_root)
+        {
+            const auto intersection_point =
+                ray.origin + closest_root * ray.direction;
+            const auto normal = object.get_normal_at(intersection_point);
+
+            return (normal + 1.f) / 2.f;
+        }
+    } // namespace
+
     glm::vec3 scene::cast_ray(const ray& ray) const
     {
         float closest_root{ std::numeric_limits<float>::max() };
-        object* hit_object = nullptr;
+        utils::view_ptr<object> hit_object;
 
         for (const auto& object : objects_)
         {
@@ -17,24 +32,16 @@ namespace yart
                 continue;
 
             closest_root = std::min(*root, closest_root);
-            hit_object = object.get();
+            hit_object = object;
         }
 
         if (closest_root != std::numeric_limits<float>::max())
         {
-            const auto intersection_point =
-                ray.origin + closest_root * ray.direction;
-            const auto normal = hit_object->get_normal_at(intersection_point);
-            return (normal + 1.f) / 2.f;
+            return compute_color(*hit_object, ray, closest_root);
         }
         else
         {
-            glm::vec3 unit_direction = glm::normalize(ray.direction);
-            auto a = 0.5f * (unit_direction.y + 1.0f);
-            const auto default_color = (1.0f - a) * glm::vec3(1.0f, 1.0f, 1.0f)
-                + a * glm::vec3(0.5f, 0.7f, 1.0f);
-
-            return default_color;
+            return {};
         }
     }
 } // namespace yart
