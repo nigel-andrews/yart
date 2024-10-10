@@ -20,7 +20,13 @@ namespace yart
             : render_function_{ params... }
             , width_{ width }
             , height_{ height }
-        {}
+        {
+            if (width_ < 1 || height_ < 1)
+            {
+                throw std::invalid_argument(
+                    "Screen sizes must be greater than 0 !");
+            }
+        }
 
         constexpr int width_get() const
         {
