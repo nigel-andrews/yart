@@ -9,6 +9,11 @@ namespace yart
 {
     struct object
     {
+        constexpr object() = default;
+        explicit constexpr object(const glm::vec3& pos)
+            : position(pos)
+        {}
+
         virtual ~object() = default;
         virtual std::optional<float> intersect(ray r) const = 0;
         virtual glm::vec3
@@ -21,5 +26,6 @@ namespace yart
             glm::vec3 albedo = glm::vec3{ 1.f };
             // TODO: metalness, roughness, other kinds of -nesses
         } material;
+        glm::vec3 position;
     };
 } // namespace yart

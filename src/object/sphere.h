@@ -6,12 +6,11 @@ namespace yart
 {
     struct sphere : object
     {
-        glm::vec3 position;
         float radius;
 
         sphere() = default;
         sphere(const glm::vec3& position, float radius)
-            : position(position)
+            : object(position)
             , radius(radius)
         {}
 
