@@ -5,6 +5,7 @@
 
 #include "camera.h"
 #include "object/object.h"
+#include "utils/view_ptr.h"
 
 namespace yart
 {
@@ -18,19 +19,20 @@ namespace yart
             objects_.emplace_back(object);
         }
 
-        void add_object(std::unique_ptr<object> object)
+        utils::view_ptr<object> add_object(std::unique_ptr<object> object)
         {
             objects_.push_back(std::move(object));
+            return objects_.back();
         }
 
         template <class Self>
-        auto&& camera_get(this Self&& self)
+        auto& camera_get(this Self&& self)
         {
             return std::forward<Self>(self).camera_;
         }
 
         template <class Self>
-        auto&& objects_get(this Self&& self)
+        auto& objects_get(this Self&& self)
         {
             return std::forward<Self>(self).objects_;
         }

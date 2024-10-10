@@ -8,14 +8,10 @@ namespace yart
 {
     namespace
     {
-        glm::vec3 compute_color(const object& object, const ray& ray,
-                                float closest_root)
+        glm::vec3 compute_color(const object& object, const ray& /*ray*/,
+                                float /*closest_root*/)
         {
-            const auto intersection_point =
-                ray.origin + closest_root * ray.direction;
-            const auto normal = object.get_normal_at(intersection_point);
-
-            return (normal + 1.f) / 2.f;
+            return object.material.albedo;
         }
     } // namespace
 
