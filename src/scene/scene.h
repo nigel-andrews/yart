@@ -29,10 +29,10 @@ namespace yart
             return objects_.back();
         }
 
-        void light_source_set(const glm::vec3& position,
+        void light_source_set(const glm::vec3& position, float intensity = 1.f,
                               const glm::vec3& colour = glm::vec3{ 1.f })
         {
-            light_source_ = lights::point_light{ position, colour };
+            light_source_ = lights::point_light{ position, colour, intensity };
         }
 
         template <class Self>

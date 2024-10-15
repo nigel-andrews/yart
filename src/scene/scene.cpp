@@ -1,22 +1,40 @@
 #include "scene.h"
 
+#include <algorithm>
 #include <glm/geometric.hpp>
 
 #include "utils/view_ptr.h"
 
 namespace yart
 {
+    namespace
+    {
+        glm::vec3 reflect(const glm::vec3& incident, const glm::vec3& normal)
+        {
+            return incident - 2.f * glm::dot(normal, incident) * normal;
+        }
+    } // namespace
+
     glm::vec3 scene::compute_color(const object& object, const ray& ray,
                                    float t) const
     {
         // TODO: gamma correction
         const auto light_direction =
             glm::normalize(light_source_.position - object.position);
-        const auto incident_angle =
-            glm::dot(object.get_normal_at(ray[t]), light_direction);
+        const auto normal = object.get_normal_at(ray[t]);
+        const auto incident_angle = glm::dot(normal, light_direction);
 
-        return (object.material.albedo / static_cast<float>(M_PI))
-            * light_source_.colour * std::max(incident_angle, 0.f);
+        const auto view_direction =
+            glm::normalize(camera_.position_get() - object.position);
+        const auto reflection = reflect(-light_direction, normal);
+        float spec =
+            std::pow(std::max(glm::dot(view_direction, reflection), 0.f), 32)
+            / 2.f;
+
+        return (object.material.albedo / static_cast<float>(M_PI) + spec)
+            * light_source_.colour
+            * std::clamp(light_source_.intensity, 0.f, 1.f)
+            * std::max(incident_angle, 0.f);
     }
 
     glm::vec3 scene::cast_ray(const ray& ray) const

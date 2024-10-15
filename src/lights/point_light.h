@@ -8,5 +8,6 @@ namespace yart::lights
     {
         glm::vec3 position;
         glm::vec3 colour;
+        float intensity;
     };
 } // namespace yart::lights
