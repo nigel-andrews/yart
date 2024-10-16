@@ -13,6 +13,8 @@ namespace yart
         {
             return incident - 2.f * glm::dot(normal, incident) * normal;
         }
+
+        constexpr glm::vec3 ambient_light{ 0.1f };
     } // namespace
 
     glm::vec3 scene::compute_color(const object& object, const ray& ray,
@@ -31,7 +33,8 @@ namespace yart
             std::pow(std::max(glm::dot(view_direction, reflection), 0.f), 32)
             / 2.f;
 
-        return (object.material.albedo / static_cast<float>(M_PI) + spec)
+        return (ambient_light
+                + object.material.albedo / static_cast<float>(M_PI) + spec)
             * light_source_.colour
             * std::clamp(light_source_.intensity, 0.f, 1.f)
             * std::max(incident_angle, 0.f);

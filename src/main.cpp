@@ -25,7 +25,7 @@ int main(int argc, char** argv)
 
     scene.camera_get().look_at({}, { 0.f, 1.f, 0.f }, { 0.f, 0.f, -1.f });
 
-    scene.light_source_set({ 0.f, 0.f, 0.f });
+    scene.light_source_set({ -4.f, 0.f, -4.f });
 
     renderer.render_scene(scene);
 }
