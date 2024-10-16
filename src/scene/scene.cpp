@@ -53,7 +53,9 @@ namespace yart
                 continue;
 
             closest_root = std::min(*root, closest_root);
-            hit_object = object;
+
+            if (*root == closest_root)
+                hit_object = object;
         }
 
         if (closest_root != std::numeric_limits<float>::max())
