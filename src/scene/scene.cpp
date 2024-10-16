@@ -52,10 +52,11 @@ namespace yart
             if (!root)
                 continue;
 
-            closest_root = std::min(*root, closest_root);
-
-            if (*root == closest_root)
+            if (*root < closest_root)
+            {
+                closest_root = *root;
                 hit_object = object;
+            }
         }
 
         if (closest_root != std::numeric_limits<float>::max())

@@ -23,6 +23,8 @@ int main(int argc, char** argv)
     scene.add_object(
         yart::factory::make_sphere(glm::vec3{ 4.f, 4.f, -5.f }, 1.f));
 
+    scene.add_object(yart::factory::make_plane(glm::vec3{ 0.f, -5.f, 0.f }));
+
     scene.camera_get().look_at({}, { 0.f, 1.f, 0.f }, { 0.f, 0.f, -1.f });
 
     scene.light_source_set({ -4.f, 0.f, -4.f });

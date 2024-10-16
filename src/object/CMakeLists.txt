@@ -1,4 +1,4 @@
-add_library(object STATIC sphere.cpp)
+add_library(object STATIC sphere.cpp plane.cpp)
 
 set_target_properties(object PROPERTIES CXX_STANDARD 23 CXX_EXTENSIONS OFF)
 
