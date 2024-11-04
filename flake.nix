@@ -20,6 +20,8 @@
         gcc14
         cmake
       ];
+
+      hardeningDisable = [ "all" ];
     };
 
   };
