@@ -6,7 +6,7 @@
 #include <iostream>
 #include <type_traits>
 
-namespace yart::render_functions
+namespace render_functions
 {
     struct ppm3_renderer
     {
@@ -33,4 +33,4 @@ namespace yart::render_functions
     {};
 
     static_assert(std::is_function_v<ppm3_renderer()>);
-} // namespace yart::render_functions
+} // namespace render_functions

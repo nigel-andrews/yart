@@ -5,7 +5,7 @@
 #include "object/plane.h"
 #include "object/sphere.h"
 
-namespace yart::factory
+namespace factory
 {
     static inline std::unique_ptr<sphere> make_sphere(const glm::vec3& pos,
                                                       float radius)
@@ -19,4 +19,4 @@ namespace yart::factory
     {
         return std::make_unique<plane>(pos, normal);
     }
-} // namespace yart::factory
+} // namespace factory

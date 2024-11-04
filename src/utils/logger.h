@@ -6,7 +6,7 @@
 #include "singleton.h"
 #include "traits.h"
 
-namespace yart::utils
+namespace utils
 {
     class logger : singleton<logger>
     {
@@ -61,4 +61,4 @@ namespace yart::utils
     {
         return logger::get_logger_instance();
     }
-} // namespace yart::utils
+} // namespace utils

@@ -2,21 +2,18 @@
 
 #include <glm/vec3.hpp>
 
-namespace yart
+struct ray
 {
-    struct ray
+    glm::vec3 origin;
+    glm::vec3 direction;
+
+    constexpr glm::vec3 at(float t) const
     {
-        glm::vec3 origin;
-        glm::vec3 direction;
+        return origin + t * direction;
+    }
 
-        constexpr glm::vec3 at(float t) const
-        {
-            return origin + t * direction;
-        }
-
-        constexpr glm::vec3 operator[](float t) const
-        {
-            return at(t);
-        }
-    };
-} // namespace yart
+    constexpr glm::vec3 operator[](float t) const
+    {
+        return at(t);
+    }
+};

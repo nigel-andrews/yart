@@ -5,7 +5,7 @@
 #include <glm/vec4.hpp>
 #include <type_traits>
 
-namespace yart::utils::inline traits
+namespace utils::inline traits
 {
     struct non_copyable
     {
@@ -73,4 +73,4 @@ namespace yart::utils::inline traits
     struct is_glm_vec<glm::uvec4> : std::true_type
     {};
 
-} // namespace yart::utils::inline traits
+} // namespace utils::inline traits

@@ -2,7 +2,7 @@
 
 #include "traits.h"
 
-namespace yart::utils
+namespace utils
 {
     template <typename T>
     class singleton
@@ -19,4 +19,4 @@ namespace yart::utils
         singleton() = default;
         ~singleton() = default;
     };
-} // namespace yart::utils
+} // namespace utils

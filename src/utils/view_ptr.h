@@ -1,9 +1,8 @@
 #pragma once
 
-#include <any>
 #include <memory>
 
-namespace yart::utils
+namespace utils
 {
     // Type erased non-owning ptr
     // TODO: move to another repo
@@ -43,4 +42,4 @@ namespace yart::utils
     private:
         T* ptr_;
     };
-} // namespace yart::utils
+} // namespace utils
