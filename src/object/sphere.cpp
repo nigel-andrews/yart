@@ -15,11 +15,14 @@ namespace yart
         const auto discriminant = b * b - 4.f * a * c;
 
         if (discriminant < 0)
-        {
             return {};
-        }
 
-        return (-b - std::sqrt(discriminant)) / (2.f * a);
+        float root = (-b - std::sqrt(discriminant)) / (2.f * a);
+
+        if (root < 0.f)
+            return {};
+
+        return root;
     }
 
     glm::vec3 sphere::get_normal_at(const glm::vec3& intersection_point) const
