@@ -11,10 +11,7 @@
 class scene
 {
 public:
-    glm::vec3 cast_ray(const ray& ray) const;
-
-    glm::vec3 compute_color(const object& object, const ray& ray,
-                            float t) const;
+    glm::vec3 cast_ray(const ray& ray, int depth = 0) const;
 
     void add_object(object* object)
     {
@@ -46,7 +43,11 @@ public:
     }
 
 private:
+    glm::vec3 compute_color(const object& object, const ray& ray, float t,
+                            int depth) const;
+
     camera camera_;
+    // TODO: Multiple lights
     point_light light_source_;
     std::vector<std::unique_ptr<object>> objects_;
 };

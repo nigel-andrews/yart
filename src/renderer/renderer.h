@@ -51,6 +51,8 @@ private:
     }
 
 private:
+    // FIXME: Contain a framebuffer in the state and allow a renderer to
+    // multiple different targets
     F render_function_;
     int width_;
     int height_;

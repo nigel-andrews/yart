@@ -12,8 +12,6 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    // FIXME: I should probably get rid of the yart namespace, this project is
-    // not a library
     renderer renderer{ std::atoi(argv[1]), std::atoi(argv[2]) };
     scene scene;
 
