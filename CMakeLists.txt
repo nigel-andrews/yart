@@ -32,6 +32,7 @@ target_link_options(compile_options INTERFACE
 
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 
+add_subdirectory(tests)
 add_subdirectory(src)
 
 add_executable(yart src/main.cpp)

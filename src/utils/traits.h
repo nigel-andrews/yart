@@ -1,5 +1,6 @@
 #pragma once
 
+#include <concepts>
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
@@ -19,6 +20,23 @@ namespace utils::inline traits
         non_movable() = default;
         non_movable(const non_movable&) = delete;
         non_movable& operator=(const non_movable&) = delete;
+    };
+
+    template <typename Ptr>
+    concept SmartPointer = requires(Ptr ptr) {
+        typename Ptr::element_type;
+        {
+            ptr.get()
+        } -> std::convertible_to<typename Ptr::element_type*>;
+        {
+            ptr.operator->()
+        } -> std::convertible_to<typename Ptr::element_type*>;
+        {
+            *ptr
+        } -> std::convertible_to<typename Ptr::element_type>;
+        {
+            static_cast<bool>(ptr)
+        };
     };
 
     template <typename T>

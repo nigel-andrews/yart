@@ -2,6 +2,8 @@
 
 #include <memory>
 
+#include "utils/traits.h"
+
 namespace utils
 {
     // Type erased non-owning ptr
@@ -24,9 +26,20 @@ namespace utils
             : ptr_(ptr.get())
         {}
 
-        constexpr operator bool()
+        constexpr operator bool() const
         {
             return ptr_ != nullptr;
+        }
+
+        constexpr bool operator==(const view_ptr& rhs) const
+        {
+            return ptr_ == rhs.ptr_;
+        }
+
+        friend constexpr bool operator==(const view_ptr& lhs,
+                                         const SmartPointer auto&& rhs)
+        {
+            return lhs.ptr_ == rhs.get();
         }
 
         constexpr T& operator*() const
