@@ -17,12 +17,31 @@ namespace
     }
 } // namespace
 
+// FIXME: overlapping shadows should contribute to stronger shading
+bool scene::is_obstructed(ray r, utils::view_ptr<const object> current) const
+{
+    for (const auto& object : objects_)
+    {
+        if (current == object.get())
+            continue;
+
+        if (object->intersect(r))
+            return true;
+    }
+
+    return false;
+}
+
 // TODO: gamma correction
 glm::vec3 scene::compute_color(const object& object, const ray& ray, float t,
                                int depth) const
 {
     const auto light_direction =
         glm::normalize(light_source_.position - object.position);
+
+    if (is_obstructed({ ray[t], light_direction }, &object))
+        return object.material.albedo / 2.f;
+
     const auto normal = object.get_normal_at(ray[t]);
     const auto incident_angle = glm::dot(normal, light_direction);
 

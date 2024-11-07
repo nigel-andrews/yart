@@ -12,11 +12,15 @@ int main(int argc, char** argv)
         return 1;
     }
 
+    // TODO: Scene manager for dynamic drawing (preferably with some UI)
     renderer renderer{ std::atoi(argv[1]), std::atoi(argv[2]) };
     scene scene;
 
     const auto obj = scene.add_object(
         factory::make_sphere(glm::vec3{ 0.f, 0.f, -1.f }, 0.5f));
+
+    scene.add_object(
+        factory::make_sphere(glm::vec3{ -.25f, 0.25f, -0.5f }, 0.1f));
 
     const auto ground = scene.add_object(
         factory::make_sphere(glm::vec3{ 0.f, -100.5f, -1.f }, 100.f));
@@ -27,7 +31,7 @@ int main(int argc, char** argv)
 
     scene.camera_get().look_at({}, { 0.f, 1.f, 0.f }, { 0.f, 0.f, -1.f });
 
-    scene.light_source_set({});
+    scene.light_source_set({ -1.f, 1.f, 0.f });
 
     renderer.render_scene(scene);
 }
