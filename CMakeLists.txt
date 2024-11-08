@@ -43,4 +43,5 @@ target_include_directories(compile_options INTERFACE ${SRC_DIR})
 
 target_compile_definitions(compile_options INTERFACE GLM_ENABLE_EXPERIMENTAL)
 
-target_link_libraries(yart PRIVATE compile_options glm::glm scene object)
+target_link_libraries(yart PRIVATE compile_options glm::glm scene object
+                                   renderer)

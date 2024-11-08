@@ -34,4 +34,5 @@ int main(int argc, char** argv)
     scene.light_source_set({ -1.f, 1.f, 0.f });
 
     renderer.render_scene(scene);
+    renderer.display(render_functions::ppm3_renderer{});
 }

@@ -1,22 +1,12 @@
 #pragma once
 
-#include "render_functions.h"
 #include "scene/scene.h"
 
-// TODO: Concept constraint
-// This class abstracts the ray casting done by the camera
-// The render function is determined by the RenderFunction template
-// at compile time.
-template <typename F = render_functions::ppm3_renderer>
 class renderer
 {
 public:
-    using render_function_t = F;
-
-    template <typename... args>
-    constexpr renderer(int width, int height, args... params)
-        : render_function_{ params... }
-        , width_{ width }
+    constexpr renderer(int width, int height)
+        : width_{ width }
         , height_{ height }
     {
         if (width_ < 1 || height_ < 1)
@@ -24,6 +14,8 @@ public:
             throw std::invalid_argument(
                 "Screen sizes must be greater than 0 !");
         }
+
+        framebuffer_.resize(width * height);
     }
 
     constexpr int width_get() const
@@ -40,7 +32,22 @@ public:
         return static_cast<float>(width_) / static_cast<float>(height_);
     }
 
+    void set_pixel(const glm::vec3& colour, int i, int j)
+    {
+        // GCC does not support mdspans
+        framebuffer_[j * width_ + i] = colour;
+    }
+
+    const glm::vec3& get_pixel(int i, int j)
+    {
+        // GCC does not support mdspans
+        return framebuffer_[j * width_ + i];
+    }
+
     void render_scene(const scene& scene);
+
+    template <typename RenderFunction>
+    void display(RenderFunction&& func);
 
 private:
     glm::vec2 ndc_coords(int i, int j)
@@ -51,11 +58,9 @@ private:
     }
 
 private:
-    // FIXME: Contain a framebuffer in the state and allow a renderer to
-    // multiple different targets
-    F render_function_;
     int width_;
     int height_;
+    std::vector<glm::vec3> framebuffer_;
 };
 
 #include "renderer.hxx"
