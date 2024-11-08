@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <glm/vec3.hpp>
+#include <random>
 
 namespace utils
 {
@@ -32,5 +33,13 @@ namespace utils
         vec.b = nclamp(vec.b);
 
         return vec;
+    }
+
+    inline float randf()
+    {
+        static std::uniform_real_distribution<float> distribution(-1.f, 1.f);
+        static std::mt19937 generator;
+
+        return distribution(generator);
     }
 } // namespace utils

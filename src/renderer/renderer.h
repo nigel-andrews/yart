@@ -50,6 +50,9 @@ public:
     void display(RenderFunction&& func);
 
 private:
+    glm::vec3 sample_pixels(const scene& scene, const camera& camera, int i,
+                            int j);
+
     glm::vec2 ndc_coords(int i, int j)
     {
         return { ((2.f * (static_cast<float>(i) + 0.5f) / width_) - 1.f)
