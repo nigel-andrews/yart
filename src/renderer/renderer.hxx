@@ -16,6 +16,8 @@ void renderer<F>::render_scene(const scene& scene)
     {
         for (auto i = 0; i < width_; ++i)
         {
+            // TODO: anti aliasing (offset i and j a bit and generate a ray)
+            //       i and j represent the center of the pixel "square"
             auto ndc = ndc_coords(i, j);
             ndc *= std::tan(camera.fov_get() / 2.f * M_PI / 180.f);
             ray.direction = camera.compute_ray_direction(ndc);

@@ -5,6 +5,8 @@
 
 #include "ray.h"
 
+// FIXME: Naming this bounding volume is more appropriate
+//        in the future
 struct object
 {
     constexpr object() = default;

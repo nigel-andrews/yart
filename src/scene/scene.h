@@ -43,7 +43,7 @@ public:
     }
 
 private:
-    bool is_obstructed(ray r, utils::view_ptr<const object> current) const;
+    bool is_obstructed(ray r, utils::view_ptr<object> current) const;
     glm::vec3 compute_color(const object& object, const ray& ray, float t,
                             int depth) const;
 
