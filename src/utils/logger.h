@@ -23,7 +23,7 @@ namespace utils
         template <typename T>
         logger& operator<<(T&& value)
         {
-#ifndef NDEBUG
+#if defined(NDEBUG) || defined(DEBUG)
             if constexpr (is_glm_vec<std::decay_t<T>>::value)
             {
                 std::clog << glm::to_string(std::forward<T>(value));

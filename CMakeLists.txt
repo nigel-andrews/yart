@@ -30,6 +30,9 @@ target_compile_options(
 target_link_options(compile_options INTERFACE
                     $<$<CONFIG:Debug>:-fsanitize=address>)
 
+target_compile_definitions(compile_options INTERFACE $<$<CONFIG:Release>:NDEBUG>
+                                                     $<$<CONFIG:Debug>:DEBUG>)
+
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 
 add_subdirectory(tests)

@@ -6,7 +6,11 @@
 
 namespace
 {
-    constexpr auto SAMPLES = 10;
+#ifdef DEBUG
+    constexpr auto SAMPLES = 5;
+#else
+    constexpr auto SAMPLES = 50;
+#endif
 } // namespace
 
 glm::vec3 renderer::sample_pixels(const scene& scene, const camera& camera,
