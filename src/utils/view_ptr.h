@@ -53,6 +53,6 @@ namespace utils
         }
 
     private:
-        T* ptr_;
+        T* ptr_ = nullptr;
     };
 } // namespace utils
