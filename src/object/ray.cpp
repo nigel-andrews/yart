@@ -11,9 +11,9 @@ namespace
 
         do
         {
-            result.x = utils::randf();
-            result.y = utils::randf();
-            result.z = utils::randf();
+            result.x = utils::nrandf();
+            result.y = utils::nrandf();
+            result.z = utils::nrandf();
         } while (glm::length(result) == 0.f || glm::length(result) > 1.f);
 
         return glm::normalize(result);

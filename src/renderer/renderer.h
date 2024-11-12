@@ -1,5 +1,6 @@
 #pragma once
 
+#include "renderer/sampler.hpp"
 #include "scene/scene.h"
 
 class renderer
@@ -44,20 +45,18 @@ public:
         return framebuffer_[j * width_ + i];
     }
 
-    void render_scene(const scene& scene);
+    void render_scene(const scene& scene, const sampler& sampler);
 
     template <typename RenderFunction>
     void display(RenderFunction&& func);
 
 private:
-    glm::vec3 sample_pixels(const scene& scene, const camera& camera, int i,
-                            int j);
-
     glm::vec2 ndc_coords(int i, int j)
     {
-        return { ((2.f * (static_cast<float>(i) + 0.5f) / width_) - 1.f)
+        // FIXME: remove the offset as it will be handled by the sampler
+        return { ((2.f * static_cast<float>(i) / width_) - 1.f)
                      * aspect_ratio(),
-                 1.f - 2.f * ((static_cast<float>(j) + 0.5f) / height_) };
+                 1.f - 2.f * (static_cast<float>(j) / height_) };
     }
 
 private:

@@ -35,11 +35,17 @@ namespace utils
         return vec;
     }
 
-    inline float randf()
+    template <float min, float max>
+    constexpr float randf()
     {
-        static std::uniform_real_distribution<float> distribution(-1.f, 1.f);
+        static std::uniform_real_distribution<float> distribution(min, max);
         static std::mt19937 generator;
 
         return distribution(generator);
+    }
+
+    constexpr float nrandf()
+    {
+        return randf<-1.f, 1.f>();
     }
 } // namespace utils

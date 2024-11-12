@@ -1,7 +1,6 @@
 #pragma once
 
 #include <format>
-#include <glm/gtx/string_cast.hpp>
 #include <glm/vec3.hpp>
 #include <iostream>
 #include <type_traits>
