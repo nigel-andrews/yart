@@ -1,12 +1,12 @@
 #pragma once
 
 #include <glm/vec3.hpp>
+#include <memory>
 #include <optional>
 
+#include "material.h"
 #include "ray.h"
 
-// FIXME: Naming this bounding volume is more appropriate
-//        in the future
 struct object
 {
     constexpr object() = default;
@@ -15,16 +15,18 @@ struct object
     {}
 
     virtual ~object() = default;
+
+    // FIXME: Hit infos to record intersection information
     virtual std::optional<float> intersect(ray r) const = 0;
+
+    // TODO: Remove since hit infos will store the relevant information
     virtual glm::vec3
     get_normal_at(const glm::vec3& intersection_point) const = 0;
 
-    // Don't really care about encapsulating this struct, it's easier
-    // to have this public
-    struct
-    {
-        glm::vec3 albedo = glm::vec3{ 1.f };
-        // TODO: metalness, roughness, other kinds of -nesses
-    } material;
+    // NOTE: Positions as a concept for object is independent to its type so
+    //       that is why they are public in the base class (+ will be movable
+    //       so it's not an invariant)
     glm::vec3 position;
+    // Public for now (quick modif of materials)
+    material mat;
 };

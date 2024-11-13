@@ -3,6 +3,7 @@
 #include <glm/vec2.hpp>
 
 // FIXME: This is essentially a uniform sampler and will be factored accordingly
+//        to feature other samplers
 class sampler
 {
 public:
