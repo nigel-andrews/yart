@@ -44,7 +44,8 @@ glm::vec3 scene::cast_ray(const ray& r, int depth) const
     // Rendering equation -> Le + S brdf * Li * n.l dl
     // S -> random hemisphere_ray_directions
 
-    return utils::clamp_vec3(
-        cast_ray({ intersection_point, ray::hemisphere_ray_direction(normal) },
-                 depth + 1));
+    return utils::clamp_vec3(cast_ray(
+        { intersection_point,
+          glm::normalize(normal + ray::hemisphere_ray_direction(normal)) },
+        depth + 1));
 }
