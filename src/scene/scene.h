@@ -46,6 +46,8 @@ private:
                             int depth) const;
 
     camera camera_;
-    std::function<glm::vec3(const ray& r)> environment_lighting_;
+    // FIXME: handle default lighting better
+    std::function<glm::vec3(const ray& r)> environment_lighting_ =
+        [](const ray&) { return glm::vec3{}; };
     std::vector<std::unique_ptr<object>> objects_;
 };
