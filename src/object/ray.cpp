@@ -20,6 +20,7 @@ namespace
     }
 } // namespace
 
+// FIXME: this function produces shady rays
 glm::vec3 ray::hemisphere_ray_direction(const glm::vec3& normal)
 {
     auto ray = randvec3();

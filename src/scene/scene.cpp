@@ -44,8 +44,12 @@ glm::vec3 scene::cast_ray(const ray& r, int depth) const
     // Rendering equation -> Le + S brdf * Li * n.l dl
     // S -> random hemisphere_ray_directions
 
-    return utils::clamp_vec3(cast_ray(
+    const auto emissive =
+        hit_object->mat.emit_color * hit_object->mat.light_intensity;
+    const auto irradiance = cast_ray(
         { intersection_point,
           glm::normalize(normal + ray::hemisphere_ray_direction(normal)) },
-        depth + 1));
+        depth + 1);
+    // FIXME: remove clamping here, potentially preventing tail call
+    return utils::clamp_vec3(emissive + irradiance);
 }
