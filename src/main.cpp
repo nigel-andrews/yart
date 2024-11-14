@@ -3,7 +3,6 @@
 #include "object/object_factory.h"
 #include "renderer/renderer.h"
 #include "renderer/sampler.hpp"
-#include "utils/misc.h"
 
 int main(int argc, char** argv)
 {
@@ -16,11 +15,9 @@ int main(int argc, char** argv)
     // TODO: Scene manager for dynamic drawing (preferably with some UI)
     renderer renderer{ std::atoi(argv[1]), std::atoi(argv[2]) };
     scene scene;
-    scene.environment_lighting_set([](const ray& r) {
-        auto t = 0.5f * (r.direction.y + 1.f);
-        return utils::lerp(glm::vec3{ 1.f }, glm::vec3{ 0.5f, 0.7f, 1.0f }, t);
-    });
 
+    // FIXME: if objects are vectors of variants that would be visited, no need
+    // to have the factory and thus we could return scene& and chain add objects
     const auto obj = scene.add_object(
         factory::make_sphere(glm::vec3{ 0.f, 0.f, -1.f }, 0.5f));
 

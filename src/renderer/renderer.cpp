@@ -2,6 +2,7 @@
 
 #include <cmath>
 
+#include "glm/exponential.hpp"
 #include "utils/misc.h"
 
 namespace
@@ -11,6 +12,13 @@ namespace
 #else
     constexpr auto SAMPLES = 50;
 #endif
+
+    constexpr float gamma = 2.2f;
+
+    glm::vec3 gamma_correction(const glm::vec3& linear_colour)
+    {
+        return glm::pow(linear_colour, glm::vec3{ 1.f / gamma });
+    }
 } // namespace
 
 void renderer::render_scene(const scene& scene, const sampler& sampler)
@@ -32,7 +40,8 @@ void renderer::render_scene(const scene& scene, const sampler& sampler)
                 colour += scene.cast_ray(r);
             }
 
-            set_pixel(colour / static_cast<float>(SAMPLES), i, j);
+            set_pixel(gamma_correction(colour / static_cast<float>(SAMPLES)), i,
+                      j);
         }
     }
 }
