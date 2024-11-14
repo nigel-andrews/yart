@@ -36,3 +36,4 @@ compile_commands.json
 .cache
 *.ppm
 perf.data
+cmp.sh

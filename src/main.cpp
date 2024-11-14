@@ -16,17 +16,16 @@ int main(int argc, char** argv)
     // TODO: Scene manager for dynamic drawing (preferably with some UI)
     renderer renderer{ std::atoi(argv[1]), std::atoi(argv[2]) };
     scene scene;
-    // scene.environment_lighting_set([](const ray& r) {
-    //     auto t = 0.5f * (r.direction.y + 1.f);
-    //     return utils::lerp(glm::vec3{ 1.f }, glm::vec3{ 0.5f, 0.7f, 1.0f },
-    //     t);
-    // });
+    scene.environment_lighting_set([](const ray& r) {
+        auto t = 0.5f * (r.direction.y + 1.f);
+        return utils::lerp(glm::vec3{ 1.f }, glm::vec3{ 0.5f, 0.7f, 1.0f }, t);
+    });
 
     const auto obj = scene.add_object(
         factory::make_sphere(glm::vec3{ 0.f, 0.f, -1.f }, 0.5f));
 
     const auto light = scene.add_object(
-        factory::make_sphere(glm::vec3{ -.25f, 0.25f, -0.5f }, 0.1f));
+        factory::make_sphere(glm::vec3{ -1.f, 1.f, -1.f }, 0.5f));
 
     light->mat.emit_color = glm::vec3{ 1.f };
     light->mat.light_intensity = 1.f;

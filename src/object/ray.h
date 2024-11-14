@@ -16,6 +16,4 @@ struct ray
     {
         return at(t);
     }
-
-    static glm::vec3 hemisphere_ray_direction(const glm::vec3& normal);
 };

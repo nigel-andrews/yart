@@ -1,6 +1,7 @@
 #include "scene.h"
 
 #include <glm/geometric.hpp>
+#include <glm/gtc/random.hpp>
 
 #include "object/ray.h"
 #include "utils/misc.h"
@@ -41,15 +42,13 @@ glm::vec3 scene::cast_ray(const ray& r, int depth) const
     // TODO: use normal + random hemisphere_ray_direction trick for better
     // distribution
     const auto normal = hit_object->get_normal_at(intersection_point);
-    // Rendering equation -> Le + S brdf * Li * n.l dl
-    // S -> random hemisphere_ray_directions
 
     const auto emissive =
         hit_object->mat.emit_color * hit_object->mat.light_intensity;
-    const auto irradiance = cast_ray(
-        { intersection_point,
-          glm::normalize(normal + ray::hemisphere_ray_direction(normal)) },
-        depth + 1);
+    const auto irradiance =
+        cast_ray({ intersection_point,
+                   glm::normalize(normal + glm::sphericalRand(1.f)) },
+                 depth + 1);
     // FIXME: remove clamping here, potentially preventing tail call
     return utils::clamp_vec3(emissive + irradiance);
 }
