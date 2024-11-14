@@ -46,6 +46,6 @@ namespace utils
 
     constexpr float nrandf()
     {
-        return randf<-1.f, 1.f>();
+        return randf<0.f, 1.f>();
     }
 } // namespace utils
