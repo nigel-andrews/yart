@@ -8,8 +8,8 @@ struct material
 {
     // TODO: use a variant and visit to correct material since both are
     //       orthogonal to eachother
-    glm::vec3 albedo;
+    glm::vec3 albedo{};
 
-    glm::vec3 emit_color;
-    float light_intensity;
+    glm::vec3 emit_color{};
+    float light_intensity = 0.f;
 };
