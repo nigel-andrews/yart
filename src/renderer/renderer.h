@@ -1,6 +1,6 @@
 #pragma once
 
-#include "renderer/sampler.hpp"
+#include "renderer/sampler.h"
 #include "scene/scene.h"
 
 class renderer
@@ -53,7 +53,6 @@ public:
 private:
     glm::vec2 ndc_coords(int i, int j)
     {
-        // FIXME: remove the offset as it will be handled by the sampler
         return { ((2.f * static_cast<float>(i) / width_) - 1.f)
                      * aspect_ratio(),
                  1.f - 2.f * (static_cast<float>(j) / height_) };

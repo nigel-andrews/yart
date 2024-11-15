@@ -2,7 +2,6 @@
 
 #include "object/object_factory.h"
 #include "renderer/renderer.h"
-#include "renderer/sampler.hpp"
 
 int main(int argc, char** argv)
 {

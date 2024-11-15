@@ -1,4 +1,4 @@
-#include "sampler.hpp"
+#include "sampler.h"
 
 #include "utils/misc.h"
 
