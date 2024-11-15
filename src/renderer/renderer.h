@@ -1,5 +1,6 @@
 #pragma once
 
+#include "renderer/bsdf.h"
 #include "renderer/sampler.h"
 #include "scene/scene.h"
 
@@ -45,7 +46,8 @@ public:
         return framebuffer_[j * width_ + i];
     }
 
-    void render_scene(const scene& scene, const sampler& sampler);
+    void render_scene(const scene& scene, const sampler& sampler,
+                      const bsdf& bsdf);
 
     template <typename RenderFunction>
     void display(RenderFunction&& func);

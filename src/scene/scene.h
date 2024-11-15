@@ -5,12 +5,13 @@
 
 #include "camera.h"
 #include "object/object.h"
+#include "renderer/bsdf.h"
 #include "utils/view_ptr.h"
 
 class scene
 {
 public:
-    glm::vec3 cast_ray(const ray& ray, int depth = 0) const;
+    glm::vec3 cast_ray(const ray& ray, const bsdf& bsdf, int depth = 0) const;
 
     void add_object(object* object)
     {

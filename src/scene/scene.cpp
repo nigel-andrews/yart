@@ -16,8 +16,10 @@ namespace
 #endif /* DEBUG */
 } // namespace
 
-glm::vec3 scene::cast_ray(const ray& r, int depth) const
+glm::vec3 scene::cast_ray(const ray& r, const bsdf& bsdf, int depth) const
 {
+    // FIXME: This should probably return the environment_lighting + some
+    // shadowing
     if (depth == MAX_DEPTH)
         return {};
 
@@ -47,11 +49,14 @@ glm::vec3 scene::cast_ray(const ray& r, int depth) const
     const auto emissive =
         hit_object->mat.emit_color * hit_object->mat.light_intensity;
 
-    // TODO: BxDF and integral
+    // FIXME: this will probably be done in a loop to get the light directions
+    const auto radiance =
+        bsdf.evaluate_at(hit_object, intersection_point, {}, {});
+
     const auto irradiance =
         cast_ray({ intersection_point,
                    glm::normalize(normal + glm::sphericalRand(1.f)) },
-                 depth + 1);
+                 bsdf, depth + 1);
 
-    return utils::clamp_vec3(emissive + irradiance);
+    return utils::clamp_vec3(emissive + radiance * irradiance);
 }

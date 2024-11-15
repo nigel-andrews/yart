@@ -21,7 +21,8 @@ namespace
     }
 } // namespace
 
-void renderer::render_scene(const scene& scene, const sampler& sampler)
+void renderer::render_scene(const scene& scene, const sampler& sampler,
+                            const bsdf& bsdf)
 {
     const auto& camera = scene.camera_get();
     ray r{ camera.position_get(), {} };
@@ -37,7 +38,7 @@ void renderer::render_scene(const scene& scene, const sampler& sampler)
                 auto sample = sampler.sample2D({ i, j });
                 r.direction = camera.compute_ray_direction(
                     ndc_coords(sample.x, sample.y));
-                colour += scene.cast_ray(r);
+                colour += scene.cast_ray(r, bsdf);
             }
 
             set_pixel(gamma_correction(colour / static_cast<float>(SAMPLES)), i,
