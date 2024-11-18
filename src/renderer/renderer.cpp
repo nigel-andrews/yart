@@ -8,9 +8,9 @@
 namespace
 {
 #ifdef DEBUG
-    constexpr auto SAMPLES = 5;
+    constexpr auto SAMPLES = 3;
 #else
-    constexpr auto SAMPLES = 50;
+    constexpr auto SAMPLES = 5;
 #endif
 
     constexpr float gamma = 2.2f;
