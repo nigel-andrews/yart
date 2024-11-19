@@ -8,11 +8,11 @@
 namespace
 {
 #ifdef DEBUG
+    constexpr auto MAX_DEPTH = 1;
+    constexpr auto TRACES = 1;
+#else
     constexpr auto MAX_DEPTH = 3;
     constexpr auto TRACES = 3;
-#else
-    constexpr auto MAX_DEPTH = 5;
-    constexpr auto TRACES = 5;
 #endif /* DEBUG */
 
     // FIXME: emissive should be an object member function
@@ -61,5 +61,5 @@ glm::vec3 scene::cast_ray(const ray& r, const bsdf& bsdf, int depth) const
             * cast_ray({ intersection_point, w_i }, bsdf, depth + 1);
     }
 
-    return utils::clamp_vec3(emissive(hit_object->mat) + irradiance);
+    return emissive(hit_object->mat) + irradiance;
 }

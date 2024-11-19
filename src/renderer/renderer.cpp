@@ -8,7 +8,7 @@
 namespace
 {
 #ifdef DEBUG
-    constexpr auto SAMPLES = 3;
+    constexpr auto SAMPLES = 1;
 #else
     constexpr auto SAMPLES = 5;
 #endif

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <format>
 #include <glm/vec3.hpp>
 #include <iostream>
@@ -17,9 +18,13 @@ namespace render_functions
         void operator()(const glm::vec3& colour, int, int)
         {
             // FIXME: the stream should be part of the state of the renderer
-            std::cout << static_cast<int>(colour.r * 255.999) << ' '
-                      << static_cast<int>(colour.g * 255.999) << ' '
-                      << static_cast<int>(colour.b * 255.999) << '\n';
+            std::cout
+                << static_cast<int>(std::clamp(colour.r * 255.999f, 0.f, 255.f))
+                << ' '
+                << static_cast<int>(std::clamp(colour.g * 255.999f, 0.f, 255.f))
+                << ' '
+                << static_cast<int>(std::clamp(colour.b * 255.999f, 0.f, 255.f))
+                << '\n';
         }
     };
 
