@@ -3,7 +3,6 @@
 #include <cmath>
 
 #include "glm/exponential.hpp"
-#include "utils/misc.h"
 
 namespace
 {

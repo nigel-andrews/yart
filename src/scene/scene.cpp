@@ -3,9 +3,7 @@
 #include <glm/geometric.hpp>
 #include <glm/gtc/random.hpp>
 
-#include "object/ray.h"
 #include "utils/misc.h"
-#include "utils/view_ptr.h"
 
 namespace
 {
@@ -26,8 +24,7 @@ namespace
 
 glm::vec3 scene::cast_ray(const ray& r, const bsdf& bsdf, int depth) const
 {
-    // FIXME: This should probably return the environment_lighting + some
-    // shadowing
+    // NOTE: enough rays have been computed
     if (depth == MAX_DEPTH)
         return {};
 
@@ -54,16 +51,11 @@ glm::vec3 scene::cast_ray(const ray& r, const bsdf& bsdf, int depth) const
     const auto intersection_point = r[closest_root];
     const auto normal = hit_object->get_normal_at(intersection_point);
 
-    // NOTE: glm::normalize(normal + glm::sphericalRand(1.f)) is the incoming
-    // light direction w_i (ray to the light) and r is w_o (ray to the camera)
-    //
     // TODO: Importance sampling
-
     glm::vec3 irradiance{};
     for (auto i = 0; i < TRACES; ++i)
     {
         const auto w_i = glm::normalize(normal + glm::sphericalRand(1.f));
-        // FIXME: is N.L needed ?
         irradiance +=
             bsdf.evaluate_at(hit_object, intersection_point, w_i, r.direction)
             * cast_ray({ intersection_point, w_i }, bsdf, depth + 1);

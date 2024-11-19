@@ -6,7 +6,6 @@
 #include "camera.h"
 #include "object/object.h"
 #include "renderer/bsdf.h"
-#include "utils/view_ptr.h"
 
 class scene
 {

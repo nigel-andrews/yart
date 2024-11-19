@@ -2,7 +2,7 @@
 
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
-#include <memory>
+#include <utility>
 
 // Camera space is normalized to [-1, 1].
 // Here, it is the renderer's job to abstract the screen size rendered and
