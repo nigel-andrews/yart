@@ -3,6 +3,7 @@
 #include <cmath>
 
 #include "glm/exponential.hpp"
+#include "progressbar.hpp"
 
 namespace
 {
@@ -24,19 +25,21 @@ void renderer::render_scene(const scene& scene, const sampler& sampler,
                             const bsdf& bsdf)
 {
     const auto& camera = scene.camera_get();
-    ray r{ camera.position_get(), {} };
+    progressbar bar{ width_ * height_, false };
 
     for (auto j = 0; j < height_; ++j)
     {
         for (auto i = 0; i < width_; ++i)
         {
+            bar.update();
             glm::vec3 colour{};
 
             for (auto s = 0; s < SAMPLES; ++s)
             {
-                auto sample = sampler.sample2D({ i, j });
-                r.direction = camera.compute_ray_direction(
-                    ndc_coords(sample.x, sample.y));
+                const auto sample = sampler.sample2D({ i, j });
+                const ray r{ camera.position_get(),
+                             camera.compute_ray_direction(
+                                 ndc_coords(sample.x, sample.y)) };
                 colour += scene.cast_ray(r, bsdf);
             }
 
@@ -44,4 +47,5 @@ void renderer::render_scene(const scene& scene, const sampler& sampler,
                       j);
         }
     }
+    std::cerr << "\n";
 }

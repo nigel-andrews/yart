@@ -42,7 +42,7 @@ add_executable(yart src/main.cpp)
 
 set_target_properties(yart PROPERTIES CXX_STANDARD 23 CXX_EXTENSIONS OFF)
 
-target_include_directories(compile_options INTERFACE ${SRC_DIR})
+target_include_directories(compile_options INTERFACE ${SRC_DIR} external)
 
 target_compile_definitions(compile_options INTERFACE GLM_ENABLE_EXPERIMENTAL)
 
