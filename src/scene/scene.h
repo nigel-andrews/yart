@@ -12,9 +12,10 @@ class scene
 public:
     glm::vec3 cast_ray(const ray& ray, const bsdf& bsdf, int depth = 0) const;
 
-    void add_object(object* object)
+    utils::view_ptr<object> add_object(object* object)
     {
         objects_.emplace_back(object);
+        return objects_.back();
     }
 
     utils::view_ptr<object> add_object(std::unique_ptr<object> object)
