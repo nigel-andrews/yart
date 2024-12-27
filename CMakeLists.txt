@@ -13,6 +13,14 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(glm)
 
+FetchContent_Declare(
+  cli11_proj
+  QUIET
+  GIT_REPOSITORY https://github.com/CLIUtils/CLI11.git
+  GIT_TAG v2.4.2)
+
+FetchContent_MakeAvailable(cli11_proj)
+
 add_library(compile_options INTERFACE)
 
 target_compile_options(
@@ -46,5 +54,5 @@ target_include_directories(compile_options INTERFACE ${SRC_DIR} external)
 
 target_compile_definitions(compile_options INTERFACE GLM_ENABLE_EXPERIMENTAL)
 
-target_link_libraries(yart PRIVATE compile_options glm::glm scene object
-                                   renderer)
+target_link_libraries(yart PRIVATE compile_options CLI11::CLI11 glm::glm scene
+                                   object renderer)

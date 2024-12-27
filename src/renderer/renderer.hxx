@@ -5,6 +5,8 @@
 #include "render_functions.h"
 #include "renderer.h"
 
+// FIXME: This is incompatible with window based display (vs rendering to an
+// output image)
 template <typename RenderFunction>
 void renderer::display(RenderFunction&& func)
 {

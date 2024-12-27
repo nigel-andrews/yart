@@ -1,3 +1,4 @@
+#include <CLI/CLI.hpp>
 #include <format>
 #include <glm/geometric.hpp>
 
@@ -5,16 +6,34 @@
 #include "renderer/diffuse_functions.h"
 #include "renderer/renderer.h"
 
+// FIXME: Use Rune when texture displays available
 int main(int argc, char** argv)
 {
-    if (argc != 3)
-    {
-        std::cerr << std::format("Usage: {} <width> <height>\n", argv[0]);
-        return 1;
-    }
+    CLI::App yart;
+
+    bool windowed{};
+    yart.add_flag("--windowed,-w", windowed,
+                  "Render scene in a window and update over time")
+        ->take_last();
+
+    int width{};
+    int height{};
+    auto width_opt =
+        yart.add_option("width", width, "Width of the rendered scene");
+    auto height_opt =
+        yart.add_option("height", height, "Width of the rendered scene")
+            ->take_first();
+
+    yart.needs(width_opt);
+    yart.needs(height_opt);
+
+    CLI11_PARSE(yart, argc, argv);
+
+    if (windowed)
+        std::println(std::clog, "windowed");
 
     // TODO: Scene manager for dynamic drawing (preferably with some UI)
-    renderer renderer{ std::atoi(argv[1]), std::atoi(argv[2]) };
+    renderer renderer{ width, height };
     scene scene;
 
     // FIXME: if objects are vectors of variants that would be visited, no need
