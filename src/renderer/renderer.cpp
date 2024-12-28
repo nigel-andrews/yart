@@ -25,13 +25,13 @@ void renderer::render_scene(const scene& scene, const sampler& sampler,
                             const bsdf& bsdf)
 {
     const auto& camera = scene.camera_get();
-    progressbar bar{ width_ * height_, false };
+    // progressbar bar{ width_ * height_, false };
 
     for (auto j = 0; j < height_; ++j)
     {
         for (auto i = 0; i < width_; ++i)
         {
-            bar.update();
+            // bar.update();
             glm::vec3 colour{};
 
             for (auto s = 0; s < SAMPLES; ++s)
@@ -47,5 +47,5 @@ void renderer::render_scene(const scene& scene, const sampler& sampler,
                       j);
         }
     }
-    std::cerr << "\n";
+    // std::cerr << "\n";
 }

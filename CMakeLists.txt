@@ -21,6 +21,8 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(cli11_proj)
 
+find_package(SDL2 REQUIRED)
+
 add_library(compile_options INTERFACE)
 
 target_compile_options(
@@ -50,9 +52,17 @@ add_executable(yart src/main.cpp)
 
 set_target_properties(yart PROPERTIES CXX_STANDARD 23 CXX_EXTENSIONS OFF)
 
+target_include_directories(yart PUBLIC ${SDL2_INCLUDE_DIRS})
 target_include_directories(compile_options INTERFACE ${SRC_DIR} external)
 
 target_compile_definitions(compile_options INTERFACE GLM_ENABLE_EXPERIMENTAL)
 
-target_link_libraries(yart PRIVATE compile_options CLI11::CLI11 glm::glm scene
-                                   object renderer)
+target_link_libraries(
+  yart
+  PRIVATE compile_options
+          ${SDL2_LIBRARIES}
+          CLI11::CLI11
+          glm::glm
+          scene
+          object
+          renderer)

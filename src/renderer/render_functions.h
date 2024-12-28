@@ -6,6 +6,8 @@
 #include <iostream>
 #include <type_traits>
 
+#include "window.h"
+
 namespace render_functions
 {
     struct ppm3_renderer
@@ -28,6 +30,23 @@ namespace render_functions
         }
     };
 
+    struct sdl2_renderer
+    {
+        void operator()(const glm::vec3& colour, int i, int j)
+        {
+            Uint8 r =
+                static_cast<Uint8>(std::clamp(colour.r * 255.0f, 0.0f, 255.0f));
+            Uint8 g =
+                static_cast<Uint8>(std::clamp(colour.g * 255.0f, 0.0f, 255.0f));
+            Uint8 b =
+                static_cast<Uint8>(std::clamp(colour.b * 255.0f, 0.0f, 255.0f));
+
+            win.draw_point(r << 16 | g << 8 | b, i, j);
+        }
+
+        window& win;
+    };
+
     template <typename T>
     struct needs_setup : std::false_type
     {};
@@ -37,4 +56,5 @@ namespace render_functions
     {};
 
     static_assert(std::is_function_v<ppm3_renderer()>);
+    static_assert(std::is_function_v<sdl2_renderer()>);
 } // namespace render_functions

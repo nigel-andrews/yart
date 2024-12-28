@@ -50,6 +50,7 @@ namespace utils
 #ifndef NDEBUG
             std::clog << func;
 #endif
+            (void)func;
             return *this;
         }
 

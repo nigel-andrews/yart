@@ -19,6 +19,7 @@
       packages = [
         gcc14
         cmake
+        SDL2
       ];
 
       hardeningDisable = [ "all" ];

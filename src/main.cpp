@@ -4,7 +4,9 @@
 
 #include "object/object_factory.h"
 #include "renderer/diffuse_functions.h"
+#include "renderer/render_functions.h"
 #include "renderer/renderer.h"
+#include "renderer/window.h"
 
 // FIXME: Use Rune when texture displays available
 int main(int argc, char** argv)
@@ -28,9 +30,6 @@ int main(int argc, char** argv)
     yart.needs(height_opt);
 
     CLI11_PARSE(yart, argc, argv);
-
-    if (windowed)
-        std::println(std::clog, "windowed");
 
     // TODO: Scene manager for dynamic drawing (preferably with some UI)
     renderer renderer{ width, height };
@@ -97,6 +96,29 @@ int main(int argc, char** argv)
     bsdf bsdf{ diffuse_functions::lambertian{},
                [](utils::view_ptr<object>, const glm::vec3&, const glm::vec3&,
                   const glm::vec3&) { return glm::vec3{}; } };
-    renderer.render_scene(scene, sampler{}, bsdf);
-    renderer.display(render_functions::ppm3_renderer{});
+
+    if (!windowed)
+    {
+        renderer.render_scene(scene, sampler{}, bsdf);
+        renderer.display(render_functions::ppm3_renderer{});
+        return 0;
+    }
+
+    init_graphics();
+
+    window window{ width, height };
+    render_functions::sdl2_renderer render_func{ window };
+
+    SDL_Event event;
+    while (true)
+    {
+        if (SDL_PollEvent(&event) && event.type == SDL_QUIT)
+            break;
+
+        renderer.render_scene(scene, sampler{}, bsdf);
+        renderer.display(render_func);
+        window.present();
+    }
+
+    destroy_graphics();
 }

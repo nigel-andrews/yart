@@ -8,8 +8,8 @@
 namespace
 {
 #ifdef DEBUG
-    constexpr auto MAX_DEPTH = 1;
-    constexpr auto TRACES = 1;
+    constexpr auto MAX_DEPTH = 2;
+    constexpr auto TRACES = 2;
 #else
     constexpr auto MAX_DEPTH = 3;
     constexpr auto TRACES = 3;
