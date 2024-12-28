@@ -1,5 +1,6 @@
 #pragma once
 
+#include "glm/vector_relational.hpp"
 #include "renderer/bsdf.h"
 #include "renderer/sampler.h"
 #include "scene/scene.h"
@@ -36,8 +37,14 @@ public:
 
     void set_pixel(const glm::vec3& colour, int i, int j)
     {
+        if (colour.r + colour.g + colour.b < 0.01)
+            return;
+
         // GCC does not support mdspans
-        framebuffer_[j * width_ + i] = colour;
+        auto idx = j * width_ + i;
+
+        framebuffer_[idx] += colour;
+        framebuffer_[idx] *= 0.5f;
     }
 
     const glm::vec3& get_pixel(int i, int j)

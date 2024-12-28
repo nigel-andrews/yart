@@ -1,4 +1,5 @@
 #include <CLI/CLI.hpp>
+#include <cstdint>
 #include <format>
 #include <glm/geometric.hpp>
 
@@ -110,15 +111,21 @@ int main(int argc, char** argv)
     render_functions::sdl2_renderer render_func{ window };
 
     SDL_Event event;
-    while (true)
-    {
-        if (SDL_PollEvent(&event) && event.type == SDL_QUIT)
-            break;
+    int frames = 0;
+    bool quit = false;
 
-        renderer.render_scene(scene, sampler{}, bsdf);
-        renderer.display(render_func);
-        window.present();
-    }
+    // FIXME: render scene in diff thread
+    do
+    {
+        if (++frames == 100)
+        {
+            frames = 0;
+            renderer.render_scene(scene, sampler{}, bsdf);
+            renderer.display(render_func);
+            window.present();
+        }
+        quit = SDL_PollEvent(&event) && event.type == SDL_QUIT;
+    } while (!quit);
 
     destroy_graphics();
 }
