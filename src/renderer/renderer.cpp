@@ -36,6 +36,12 @@ void renderer::render_scene(const scene& scene, const sampler& sampler,
 
             for (auto s = 0; s < SAMPLES; ++s)
             {
+                if (stop_requested())
+                {
+                    std::cout << "Stop requested !\n";
+                    return;
+                }
+
                 const auto sample = sampler.sample2D({ i, j });
                 const ray r{ camera.position_get(),
                              camera.compute_ray_direction(

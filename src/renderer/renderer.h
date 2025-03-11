@@ -1,9 +1,12 @@
 #pragma once
 
-#include "glm/vector_relational.hpp"
+#include <ostream>
+#include <stop_token>
+
 #include "renderer/bsdf.h"
 #include "renderer/sampler.h"
 #include "scene/scene.h"
+#include "utils/view_ptr.h"
 
 class renderer
 {
@@ -28,6 +31,16 @@ public:
     constexpr int height_get() const
     {
         return height_;
+    }
+
+    constexpr void stop_token_set(utils::view_ptr<std::stop_token> stop_token)
+    {
+        stop_token_ = stop_token;
+    }
+
+    bool stop_requested()
+    {
+        return !stop_token_ || stop_token_->stop_requested();
     }
 
     constexpr float aspect_ratio() const
@@ -71,6 +84,7 @@ private:
     int width_;
     int height_;
     std::vector<glm::vec3> framebuffer_;
+    utils::view_ptr<std::stop_token> stop_token_;
 };
 
 #include "renderer.hxx"

@@ -1,13 +1,22 @@
 #include <CLI/CLI.hpp>
-#include <cstdint>
-#include <format>
 #include <glm/geometric.hpp>
+#include <mutex>
+#include <print>
+#include <semaphore>
+#include <thread>
 
 #include "object/object_factory.h"
 #include "renderer/diffuse_functions.h"
 #include "renderer/render_functions.h"
 #include "renderer/renderer.h"
 #include "renderer/window.h"
+
+namespace
+{
+    std::mutex mutex;
+    std::binary_semaphore present{ 0 };
+    std::atomic_flag render;
+} // namespace
 
 // FIXME: Use Rune when texture displays available
 int main(int argc, char** argv)
@@ -111,21 +120,48 @@ int main(int argc, char** argv)
     render_functions::sdl2_renderer render_func{ window };
 
     SDL_Event event;
-    int frames = 0;
     bool quit = false;
 
-    // FIXME: render scene in diff thread
-    do
     {
-        if (++frames == 100)
+        render.test_and_set();
+        std::stop_source source;
+        // FIXME: handle the state properly (stop capturing all)
+        std::jthread render_thread(
+            [&](std::stop_token token) {
+                renderer.stop_token_set(&token);
+                int frames = 0;
+
+                while (render.test())
+                {
+                    renderer.render_scene(scene, sampler{}, bsdf);
+                    std::println("frame {}", ++frames);
+                    present.acquire();
+                    {
+                        std::lock_guard guard(mutex);
+                        renderer.display(render_func);
+                        present.release();
+                    }
+                }
+            },
+            source.get_token());
+
+        present.release();
+
+        do
         {
-            frames = 0;
-            renderer.render_scene(scene, sampler{}, bsdf);
-            renderer.display(render_func);
-            window.present();
-        }
-        quit = SDL_PollEvent(&event) && event.type == SDL_QUIT;
-    } while (!quit);
+            if (present.try_acquire())
+            {
+                std::lock_guard guard(mutex);
+                window.present();
+                present.release();
+            }
+
+            quit = SDL_PollEvent(&event) && event.type == SDL_QUIT;
+        } while (!quit);
+
+        source.request_stop();
+        render.clear();
+    }
 
     destroy_graphics();
 }

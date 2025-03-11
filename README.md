@@ -10,6 +10,8 @@ The goal with this project is to learn a bit more on raytracing (mostly path tra
 - [X] Basic path tracing (Monte Carlo)
 - [X] Anti-aliasing (random uniform sampling in unit cube)
 - [X] PPM3 image generation
+- [X] Render to window
+- [X] Render in different thread
 - [ ] Specular BRDF
 - [ ] Triangle and planar primitives rendering
 - [ ] Cornell box render
